@@ -35,28 +35,20 @@ inputUpload.addEventListener("change", async(evento) => {
     }
 });
 
-const inputTags = document.getElementById("categoria");
-const listaTags = document.querySelector(".lista-tags");
+//Adicione a funcionalidade de inserir tags no seu projeto.
 
-inputTags.addEventListener("keypress", (evento) => {
+const inputEntrada = document.getElementById("categoria");
+const listaDeTags = document.querySelector(".lista-tags");
+
+inputEntrada.addEventListener("keypress", (evento) => {
     if (evento.key === "Enter") {
         evento.preventDefault();
-        const tagTexto = inputTags.value.trim();
-        if (tagTexto !== "") {
-            const tagNova = document.createElement("li");
-            tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`;
-            listaTags.appendChild(tagNova);
-            inputTags.value = "";
-        };
-    };
-
-});
-
-
-
-listaTags.addEventListener("click", (evento) => {
-    if (evento.target.classList.contains("remove-tag")) {
-        const tagQueQueremosRemover = evento.target.parentElement;
-        listaTags.removeChild(tagQueQueremosRemover);
-    };
-});
+        const textoTag = inputEntrada.value.trim();
+        if (textoTag !== "") {
+            const novaTag = document.createElement("li");
+            novaTag.innerHTML = `<p>${textoTag}<p><img src="./img/close-black.svg" class="remove-tag">`;
+            listaDeTags.appendChild(novaTag);
+            inputEntrada.value = "";
+        }
+    }
+})
