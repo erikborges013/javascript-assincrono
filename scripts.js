@@ -46,9 +46,30 @@ inputEntrada.addEventListener("keypress", (evento) => {
         const textoTag = inputEntrada.value.trim();
         if (textoTag !== "") {
             const novaTag = document.createElement("li");
-            novaTag.innerHTML = `<p>${textoTag}<p><img src="./img/close-black.svg" class="remove-tag">`;
+            novaTag.innerHTML = `<p>${textoTag}</p><img src="./img/close-black.svg" class="remove-tag">`;
             listaDeTags.appendChild(novaTag);
             inputEntrada.value = "";
         }
     }
 })
+
+//Implemente a funcionalidade de remover tags.
+
+
+
+listaDeTags.addEventListener("click", (evento) => {
+    if (evento.target.classList.contains("remove-tag")) {
+        const tagQueQueremosRemover = evento.target.parentElement;
+        listaDeTags.removeChild(tagQueQueremosRemover);
+    }
+})
+
+const listaDeTagsDisponiveis = ["Front-end", "Programação", "Data Science", "Full-stack", "HTML", "CSS", "JavaScript"];
+
+async function verificarTagsDisponiveis(textoTag) {
+    return new Promise((resolve) => {
+        setTimeout(()=> {
+            resolve(listaDeTagsDisponiveis.includes(textoTag))
+        }, 1000)
+    })
+}
