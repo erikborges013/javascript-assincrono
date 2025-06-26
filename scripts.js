@@ -90,20 +90,10 @@ inputEntrada.addEventListener("keypress", async(evento) => {
 
 const botaoPublicar = document.querySelector(".botao-publicar");
 
-botaoPublicar.addEventListener("click", async(evento) => {
-    evento.preventDefault();
 
-    const nomeDoProjeto = document.getElementById("nome").value;
-    const descricaoDoProjeto = document.getElementById("descricao").value;
-    const tagsProjeto = Array.from(listaDeTags.querySelectorAll("p")).map((tag) => tag.textContent);
-
-    console.log(nomeDoProjeto);
-    console.log(descricaoDoProjeto);
-    console.log(tagsProjeto);
-})
 
 async function publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjeto) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
             const deuCerto = Math.random() > 0.5;
             if (deuCerto) {
@@ -114,3 +104,40 @@ async function publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjeto) {
         }, 2000);
     })
 }
+
+botaoPublicar.addEventListener("click", async(evento) => {
+    evento.preventDefault();
+
+    const nomeDoProjeto = document.getElementById("nome").value;
+    const descricaoDoProjeto = document.getElementById("descricao").value;
+    const tagsProjeto = Array.from(listaDeTags.querySelectorAll("p")).map((tag) => tag.textContent);
+
+    if (nomeDoProjeto && descricaoDoProjeto && tagsProjeto ) {
+        try {
+            const resultado = await publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjeto);
+            alert(resultado);
+            
+        } catch (error) {
+            alert("Deu tudo errado!");
+            console.error("Deu tudo errado", error);
+        } finally {
+            document.getElementById("nome").value = "";
+            document.getElementById("descricao").value = "";
+            listaDeTags.innerHTML = "";
+        } 
+    } else {
+        alert("Preencha todos os campos desgraçado.");
+    }
+})
+
+const botaoDescartar = document.querySelector(".botao-descartar");
+
+botaoDescartar.addEventListener("click", (evento) => {
+    evento.preventDefault();
+    const formulario = document.querySelector("form");
+    formulario.reset();
+    listaDeTags.innerHTML = "";
+
+    imagemPrincipal.src = "./img/imagem1.png";
+    nomeDaImagem.textContent = "image_projeto.png";
+})
